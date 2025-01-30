@@ -10,6 +10,7 @@ GUI\listandoVid$1.class
 GUI\Menu$1.class
 GUI\Menu.class
 Codigo\VidCOD.class
+Codigo\Util.class
 GUI\listandoCel.class
 GUI\listandoTel.class
 vendaeletronicos\VendaEletronicos.class

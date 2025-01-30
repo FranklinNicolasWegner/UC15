@@ -4,10 +4,29 @@
  */
 package Codigo;
 
+import Dados.Celulares;
+import jakarta.persistence.EntityManager;
+
 /**
  *
  * @author Nicolas
  */
 public class CelCOD {
+    
+    public void cadastrarCelulares(Celulares c){
+        EntityManager em = Util.getEntityManager();
+        
+        try{
+            em.getTransaction().begin();
+            em.persist(c);
+            em.getTransaction().commit();
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            throw e;
+        }
+       finally{
+            Util.closeEntityManager();
+        }
+    }
     
 }
