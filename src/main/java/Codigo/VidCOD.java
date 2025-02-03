@@ -5,8 +5,11 @@
 package Codigo;
 
 
+import Dados.Celulares;
 import Dados.Videogames;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -14,7 +17,7 @@ import jakarta.persistence.EntityManager;
  */
 public class VidCOD {
     
-    public void cadastrarCelulares(Videogames v){
+    public void cadastrarVideogames(Videogames v){
         EntityManager em = Util.getEntityManager();
         
         try{
@@ -29,5 +32,27 @@ public class VidCOD {
             Util.closeEntityManager();
         }
     }
+    
+    public List<Celulares> listarPesquisa(String filtroMarca, String filtroNome){
+        EntityManager em = Util.getEntityManager();
+        List videogames = null;
+        
+        try{
+            String textoQuery = "Select c from Celulares c" + 
+                    "where (:descricao is null OR d.descricao LIKE :descricao )" +
+                    "and (:descricao2 is null OR d2.descricao2 LIKE :descricao2 )";
+            
+            Query consulta = em.createQuery(textoQuery);
+            
+            consulta.setParameter("descricao", filtroMarca.isEmpty() ? null : "%" + filtroMarca + "%" );
+            consulta.setParameter("descricao2", filtroNome.isEmpty() ? null : "%" + filtroNome + "%" );
+            
+            videogames = consulta.getResultList();
+        }finally{
+            Util.closeEntityManager();
+        }
+        return videogames;
+    }
+    
     
 }

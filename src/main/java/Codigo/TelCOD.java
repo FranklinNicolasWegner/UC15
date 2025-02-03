@@ -5,8 +5,11 @@
 package Codigo;
 
 
+import Dados.Celulares;
 import Dados.Televisores;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -14,7 +17,7 @@ import jakarta.persistence.EntityManager;
  */
 public class TelCOD {
     
-    public void cadastrarCelulares(Televisores t){
+    public void cadastrarTelevisores(Televisores t){
         EntityManager em = Util.getEntityManager();
         
         try{
@@ -30,4 +33,27 @@ public class TelCOD {
         }
     }
     
+public List<Celulares> listarPesquisa(String filtroMarca, String filtroNome){
+        EntityManager em = Util.getEntityManager();
+        List televisores = null;
+        
+        try{
+            String textoQuery = "Select c from Televisores t" + 
+                    "where (:descricao is null OR d.descricao LIKE :descricao )" +
+                    "and (:descricao2 is null OR d2.descricao2 LIKE :descricao2 )";
+            
+            Query consulta = em.createQuery(textoQuery);
+            
+            consulta.setParameter("descricao", filtroMarca.isEmpty() ? null : "%" + filtroMarca + "%" );
+            consulta.setParameter("descricao2", filtroNome.isEmpty() ? null : "%" + filtroNome + "%" );
+            
+            televisores = consulta.getResultList();
+        }finally{
+            Util.closeEntityManager();
+        }
+        return televisores;
+    }
+
+
+
 }
