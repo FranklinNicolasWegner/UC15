@@ -33,19 +33,19 @@ public class TelCOD {
         }
     }
     
-public List<Celulares> listarPesquisa(String filtroMarca, String filtroNome){
+public List<Televisores> listarPesquisa(String filtroMarca, String filtroNome){
         EntityManager em = Util.getEntityManager();
         List televisores = null;
         
         try{
             String textoQuery = "Select c from Televisores t" + 
-                    "where (:descricao is null OR d.descricao LIKE :descricao )" +
-                    "and (:descricao2 is null OR d2.descricao2 LIKE :descricao2 )";
+                    "where (:marca is null OR t.marca LIKE :marca )" +
+                    "and (:nome is null OR t.nome LIKE :nome )";
             
             Query consulta = em.createQuery(textoQuery);
             
-            consulta.setParameter("descricao", filtroMarca.isEmpty() ? null : "%" + filtroMarca + "%" );
-            consulta.setParameter("descricao2", filtroNome.isEmpty() ? null : "%" + filtroNome + "%" );
+            consulta.setParameter("marca", filtroMarca.isEmpty() ? null : "%" + filtroMarca + "%" );
+            consulta.setParameter("nome", filtroNome.isEmpty() ? null : "%" + filtroNome + "%" );
             
             televisores = consulta.getResultList();
         }finally{

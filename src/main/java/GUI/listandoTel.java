@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import Codigo.TelCOD;
+import Dados.Televisores;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Nicolas
@@ -56,6 +61,11 @@ public class listandoTel extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaTel);
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +181,14 @@ public class listandoTel extends javax.swing.JFrame {
     cdtelevisor.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+    TelCOD telcod = new TelCOD();
+    
+    List<Televisores> televisores = telcod.listarPesquisa(txtMarca.getText(), txtNome.getText());
+    
+    preencheTabela(televisores);
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,4 +239,29 @@ public class listandoTel extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
+
+public void preencheTabela(List<Televisores> televisores){      
+      String columns[] = {"Id", "Marca", "Nome", "Preço", "Status"};
+      String dados[][] = new String[televisores.size()][columns.length];
+      
+      
+      int i=0;
+      for(Televisores t: televisores){
+          dados[i] = new String[]{ 
+              String.valueOf(t.getId()), 
+              t.getMarca(), 
+              t.getNome(), 
+              String.valueOf(t.getPreco()),
+              t.getEstado()};
+          i++;
+      }
+      
+      DefaultTableModel model = new DefaultTableModel(dados, columns);
+      listaTel.setModel(model);
+    } 
+
+
+
+
+
 }

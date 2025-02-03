@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import Codigo.VidCOD;
+import Dados.Videogames;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Nicolas
@@ -56,6 +61,11 @@ public class listandoVid extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaVid);
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +181,14 @@ public class listandoVid extends javax.swing.JFrame {
     cdvideogame.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+    VidCOD vidcod = new VidCOD();
+    
+    List<Videogames> videogames = vidcod.listarPesquisa(txtMarca.getText(), txtNome.getText());
+    
+    preencheTabela(videogames);
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,4 +239,26 @@ public class listandoVid extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
+
+public void preencheTabela(List<Videogames> videogames){      
+      String columns[] = {"Id", "Marca", "Nome", "Preço", "Status"};
+      String dados[][] = new String[videogames.size()][columns.length];
+      
+      
+      int i=0;
+      for(Videogames v: videogames){
+          dados[i] = new String[]{ 
+              String.valueOf(v.getId()), 
+              v.getMarca(), 
+              v.getNome(), 
+              String.valueOf(v.getPreco()),
+              v.getEstado()};
+          i++;
+      }
+      
+      DefaultTableModel model = new DefaultTableModel(dados, columns);
+      listaVid.setModel(model);
+    } 
+
+
 }
