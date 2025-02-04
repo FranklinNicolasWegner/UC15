@@ -38,7 +38,7 @@ public class VidCOD {
         List videogames = null;
         
         try{
-            String textoQuery = "Select c from Videogames v" + 
+            String textoQuery = "Select v from Videogames v" + 
                     "where (:marca is null OR v.marca LIKE :descricao )" +
                     "and (:nome is null OR v.nome LIKE :nome )";
             
@@ -54,5 +54,50 @@ public class VidCOD {
         return videogames;
     }
     
+    public List<Videogames> listar(){
+      EntityManager em = Util.getEntityManager();
+      try{
+          Query consulta = em.createQuery("select v from Videogames v where estado = 'A venda'");
+          List<Videogames> videogames = consulta.getResultList();
+          return videogames;
+      }finally{
+          Util.closeEntityManager();
+      }
+    }  
+
+public List<Videogames> listarVendidos(){
+      EntityManager em = Util.getEntityManager();
+      try{
+          Query consulta = em.createQuery("select v from Videogames v where estado = 'Vendido'");
+          List<Videogames> videogames = consulta.getResultList();
+          return videogames;
+      }finally{
+          Util.closeEntityManager();
+      }
+    }  
+
+
+public void excluir(int id){
     
+    EntityManager em = Util.getEntityManager();
+    
+    try{
+        Videogames v = em.find(Videogames.class, id);
+        
+        if(v != null){
+            em.getTransaction().begin();
+            em.remove(v);
+            em.getTransaction().commit();
+        }
+    }catch(Exception e){
+        em.getTransaction().rollback();
+        throw e;
+    }
+    finally{
+        Util.closeEntityManager();
+    }
+    
+}
+
+
 }

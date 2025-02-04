@@ -6,6 +6,7 @@ package GUI;
 
 import Codigo.TelCOD;
 import Dados.Televisores;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -139,12 +140,17 @@ public class CadastroTelevisor extends javax.swing.JFrame {
         
         TelCOD telcod = new TelCOD();
         
+        try{
         televisores.setEstado("A venda");
         televisores.setNome(txtNome.getText());
         televisores.setMarca(txtMarca.getText());
         televisores.setPreco(Double.parseDouble(txtPreco.getText()));
         
         telcod.cadastrarTelevisores(televisores);
+        JOptionPane.showMessageDialog(null, "Cadastro concluído");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Erro ao cadastrar");
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

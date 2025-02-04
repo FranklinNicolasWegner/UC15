@@ -5,8 +5,12 @@
 package GUI;
 
 import Codigo.TelCOD;
+import Codigo.Util;
 import Dados.Televisores;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,6 +24,9 @@ public class listandoTel extends javax.swing.JFrame {
      */
     public listandoTel() {
         initComponents();
+        TelCOD telcod = new TelCOD();
+        List<Televisores> televisores = telcod.listar();
+        preencheTabela(televisores);
     }
 
     /**
@@ -75,8 +82,18 @@ public class listandoTel extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +103,11 @@ public class listandoTel extends javax.swing.JFrame {
         });
 
         btnVendidos.setText("Itens vendidos");
+        btnVendidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendidosActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Marca:");
 
@@ -188,6 +210,58 @@ public class listandoTel extends javax.swing.JFrame {
     
     preencheTabela(televisores);
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendidosActionPerformed
+    TelCOD telcod = new TelCOD();
+    List<Televisores> televisores = telcod.listarVendidos();
+    preencheTabela(televisores);
+    }//GEN-LAST:event_btnVendidosActionPerformed
+
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+    Util util = new Util();
+   if(listaTel.getSelectedRow() == -1){
+        JOptionPane.showMessageDialog(null, "Selecione um produto na lista");
+    }
+    
+    String sql = "update televisores set estado = 'Vendido' where id = " + listaTel.getValueAt(listaTel.getSelectedRow(), 0);
+    try{
+    util.Connection();
+    
+    
+    PreparedStatement stmt = util.conn.prepareStatement(sql);
+    stmt.executeUpdate(sql);
+    JOptionPane.showMessageDialog(null, "Vendido");
+    
+    util.desconectar();
+    
+    }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, e);
+    }
+    }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+    try{
+          if(listaTel.getSelectedRow() >= 0){ 
+              
+              String id = (String)listaTel.getValueAt(listaTel.getSelectedRow(), 0);
+             
+              int resposta = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir o produto de ID " + id + "?");
+              if(resposta == 0)
+              {   
+                  
+                  TelCOD telcod = new TelCOD();          
+                  telcod.excluir(Integer.parseInt(id));
+                  JOptionPane. showMessageDialog(this, "Produto excluído com sucesso");
+                  
+                  btnPesquisarActionPerformed(evt);
+              }
+          }else{
+              JOptionPane.showMessageDialog(null, "Selecione um produto na lista");
+          }
+      }catch(Exception e){
+          JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
+      }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

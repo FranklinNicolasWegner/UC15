@@ -38,7 +38,7 @@ public List<Televisores> listarPesquisa(String filtroMarca, String filtroNome){
         List televisores = null;
         
         try{
-            String textoQuery = "Select c from Televisores t" + 
+            String textoQuery = "Select t from Televisores t" + 
                     "where (:marca is null OR t.marca LIKE :marca )" +
                     "and (:nome is null OR t.nome LIKE :nome )";
             
@@ -54,6 +54,49 @@ public List<Televisores> listarPesquisa(String filtroMarca, String filtroNome){
         return televisores;
     }
 
+public List<Televisores> listar(){
+      EntityManager em = Util.getEntityManager();
+      try{
+          Query consulta = em.createQuery("select t from Televisores t where estado = 'A venda'");
+          List<Televisores> televisores = consulta.getResultList();
+          return televisores;
+      }finally{
+          Util.closeEntityManager();
+      }
+    }  
+
+public List<Televisores> listarVendidos(){
+      EntityManager em = Util.getEntityManager();
+      try{
+          Query consulta = em.createQuery("select t from Televisores t where estado = 'Vendido'");
+          List<Televisores> televisores = consulta.getResultList();
+          return televisores;
+      }finally{
+          Util.closeEntityManager();
+      }
+    } 
+
+public void excluir(int id){
+    
+    EntityManager em = Util.getEntityManager();
+    
+    try{
+        Televisores t = em.find(Televisores.class, id);
+        
+        if(t != null){
+            em.getTransaction().begin();
+            em.remove(t);
+            em.getTransaction().commit();
+        }
+    }catch(Exception e){
+        em.getTransaction().rollback();
+        throw e;
+    }
+    finally{
+        Util.closeEntityManager();
+    }
+    
+}
 
 
 }

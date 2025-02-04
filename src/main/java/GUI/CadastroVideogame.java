@@ -6,6 +6,7 @@ package GUI;
 
 import Codigo.VidCOD;
 import Dados.Videogames;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -138,13 +139,17 @@ public class CadastroVideogame extends javax.swing.JFrame {
      Videogames videogames = new Videogames();
         
         VidCOD vidcod = new VidCOD();
-        
+       try{ 
         videogames.setEstado("A venda");
         videogames.setNome(txtNome.getText());
         videogames.setMarca(txtMarca.getText());
         videogames.setPreco(Double.parseDouble(txtPreco.getText()));
         
         vidcod.cadastrarVideogames(videogames);
+        JOptionPane.showMessageDialog(null, "Cadastro concluído");
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+       }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

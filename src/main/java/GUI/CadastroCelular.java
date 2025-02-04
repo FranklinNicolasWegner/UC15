@@ -6,6 +6,8 @@ package GUI;
 
 import Codigo.CelCOD;
 import Dados.Celulares;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -138,7 +140,7 @@ public class CadastroCelular extends javax.swing.JFrame {
         Celulares celulares = new Celulares();
         
         CelCOD celcod = new CelCOD();
-        
+      try{  
         celulares.setEstado("A venda");
         celulares.setNome(txtNome.getText());
         celulares.setMarca(txtMarca.getText());
@@ -146,6 +148,10 @@ public class CadastroCelular extends javax.swing.JFrame {
         
         celcod.cadastrarCelulares(celulares);
         
+        JOptionPane.showMessageDialog(null, "Cadastro concluído");
+      }catch(NumberFormatException e){
+          JOptionPane.showMessageDialog(rootPane, "Erro ao cadastrar");
+      }
     
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

@@ -62,11 +62,47 @@ public class CelCOD {
     public List<Celulares> listar(){
       EntityManager em = Util.getEntityManager();
       try{
-          Query consulta = em.createQuery("select c from celulares c where status = A Venda");
-          List<Celulares> receitas = consulta.getResultList();
-          return receitas;
+          Query consulta = em.createQuery("select c from Celulares c where estado = 'A venda'");
+          List<Celulares> celulares = consulta.getResultList();
+          return celulares;
       }finally{
           Util.closeEntityManager();
       }
     }  
+
+public List<Celulares> listarVendidos(){
+      EntityManager em = Util.getEntityManager();
+      try{
+          Query consulta = em.createQuery("select c from Celulares c where estado = 'Vendido'");
+          List<Celulares> celulares = consulta.getResultList();
+          return celulares;
+      }finally{
+          Util.closeEntityManager();
+      }
+    } 
+
+public void excluir(int id){
+    
+    EntityManager em = Util.getEntityManager();
+    
+    try{
+        Celulares c = em.find(Celulares.class, id);
+        
+        if(c != null){
+            em.getTransaction().begin();
+            em.remove(c);
+            em.getTransaction().commit();
+        }
+    }catch(Exception e){
+        em.getTransaction().rollback();
+        throw e;
+    }
+    finally{
+        Util.closeEntityManager();
+    }
+    
+}
+
+
+
 }

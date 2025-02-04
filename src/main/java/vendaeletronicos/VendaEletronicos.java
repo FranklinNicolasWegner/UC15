@@ -4,9 +4,9 @@
 
 package vendaeletronicos;
 
-import Codigo.CelCOD;
-import Dados.Celulares;
-import javax.swing.JOptionPane;
+import GUI.Menu;
+
+
 
 /**
  *
@@ -15,18 +15,12 @@ import javax.swing.JOptionPane;
 public class VendaEletronicos {
 
     public static void main(String[] args) {
-        Celulares celulares = new Celulares();
-        CelCOD celcod = new CelCOD();
+        Menu Menu = new Menu();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+              public void run() {
+                  new Menu().setVisible(true);
+              }
+          });
         
-        try{ 
-        celulares.setNome("Moto G20");
-        celulares.setMarca("Motorola");
-        celulares.setPreco(900);
-        celulares.setEstado("Vendido");
-        
-        celcod.cadastrarCelulares(celulares);
-       }catch(Exception e){
-           JOptionPane.showMessageDialog(null, e);
-       }
     }
 }
