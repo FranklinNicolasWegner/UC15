@@ -38,7 +38,7 @@ public List<Televisores> listarPesquisa(String filtroMarca, String filtroNome){
         List televisores = null;
         
         try{
-            String textoQuery = "Select t from Televisores t" + 
+            String textoQuery = "Select t from Televisores t " + 
                     "where (:marca is null OR t.marca LIKE :marca )" +
                     "and (:nome is null OR t.nome LIKE :nome )";
             

@@ -38,9 +38,9 @@ public class VidCOD {
         List videogames = null;
         
         try{
-            String textoQuery = "Select v from Videogames v" + 
-                    "where (:marca is null OR v.marca LIKE :descricao )" +
-                    "and (:nome is null OR v.nome LIKE :nome )";
+            String textoQuery = "Select v from Videogames v " + 
+                    " where (:marca is null OR v.marca LIKE :marca )" +
+                    " and (:nome is null OR v.nome LIKE :nome )";
             
             Query consulta = em.createQuery(textoQuery);
             
