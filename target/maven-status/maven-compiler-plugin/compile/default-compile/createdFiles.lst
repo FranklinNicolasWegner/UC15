@@ -23,6 +23,7 @@ Codigo\VidCOD.class
 GUI\listandoCel.class
 GUI\listandoVid$3.class
 GUI\CadastroCelular$2.class
+GUI\listandoTel$8.class
 GUI\CadastroCelular$3.class
 vendaeletronicos\VendaEletronicos$1.class
 Codigo\TelCOD.class
@@ -43,6 +44,7 @@ Dados\Televisores.class
 GUI\listandoVid$5.class
 GUI\listandoVid$1.class
 GUI\listandoTel$6.class
+GUI\listandoVid$8.class
 GUI\Menu$1.class
 GUI\CadastroVideogame.class
 Codigo\Util.class
