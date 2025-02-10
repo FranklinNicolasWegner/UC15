@@ -54,6 +54,13 @@ public class listandoVid extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         listaVid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,6 +270,13 @@ public class listandoVid extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
       }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+    VidCOD vidcod = new VidCOD();
+        
+    List<Videogames> videogames = vidcod.listar();
+    preencheTabela(videogames);
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
