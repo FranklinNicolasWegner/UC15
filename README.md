@@ -1,4 +1,5 @@
-UC15 — Sistema de Venda de Eletrônicos
+UC15 — Sistema de Venda de Eletrônicos.
+
 📌 Sobre o projeto
 Aplicação desenvolvida em Java para auxiliar no gerenciamento de produtos de uma loja de eletrônicos, incluindo celulares, televisores e videogames.
 O sistema permite cadastrar e consultar produtos, acompanhar quais itens foram vendidos e organizar o catálogo por categorias, facilitando o controle dos produtos disponíveis na loja.
@@ -18,11 +19,13 @@ o	Videogames.
 •	Java
 •	NetBeans
 •	MySQL
+
 🎯 Objetivo
 Aplicar conceitos de programação e desenvolvimento de sistemas, trabalhando com cadastro, consulta, atualização e exclusão de registros, além da integração com banco de dados.
 
 👨‍💻 Desenvolvedor
 Franklin Nicolas Wegner
+
 📚 Status
 Projeto acadêmico finalizado.
 
